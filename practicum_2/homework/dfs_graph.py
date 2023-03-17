@@ -13,17 +13,33 @@ def visit(node: Any):
 def dfs_iterative(G: nx.Graph, node: Any):
     visited = {n: False for n in G}
 
-    ##########################
-    ### PUT YOUR CODE HERE ###
-    ##########################
+    stack = queue.LifoQueue()
+    stack.put(node)
+
+    while not stack.empty():
+        v = stack.get()
+        if visited[v] == True:
+            continue
+        visited[v] = True
+        visit(v)
+        for u in G.neighbors(v):
+            if visited[u] == False:
+                stack.put(u)
+
 
 
 def topological_sort(G: nx.DiGraph, node: Any):
     visited = {n: False for n in G}
 
-    ##########################
-    ### PUT YOUR CODE HERE ###
-    ##########################
+    answer = []
+    def dfs(t):
+        visited[t] = True
+        for u in G.neighbors(t):
+            if (visited[u] == False): dfs(u)
+        answer.append(t)
+    dfs(node)
+    answer = reversed(answer)
+    for x in answer: print(x, end=' ')
 
 
 if __name__ == "__main__":
