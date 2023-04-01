@@ -1,0 +1,12 @@
+- input:
+    a: "342"
+    b: "465"
+  output: "807"
+- input:
+    a: "0"
+    b: "0"
+  output: "0"
+- input:
+    a: "9999999"
+    b: "9999"
+  output: "10009998"
