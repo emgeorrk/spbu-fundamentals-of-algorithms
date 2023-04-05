@@ -5,19 +5,17 @@ import numpy as np
 
 
 def time_taken(tickets: list[int], k: int) -> int:
-    seconds_elapsed = 0
+    seconds_elapsed = tickets[k]
+    # как минимум время потратится на покупку билетов k-го человека
 
-    q = [i for i in range(len(tickets))]
-
-    while q:
-        seconds_elapsed += 1
-        tickets[q[0]] -= 1
-        if tickets[q[0]] > 0:
-            q.append(q[0])
-        else:
-            if q[0] == k:
-                return seconds_elapsed
-        del (q[0])
+    # если человек стоит в очереди раньше k-го, то он успеет купить tickets[k] билетов
+    # раньше, чем это сделает k-й
+    # если человек стоит после k-го, то он успеет купить tickets[k]-1 билетов
+    for x in range(len(tickets)):
+        if x < k:
+            seconds_elapsed += min(tickets[x], tickets[k])
+        if x > k:
+            seconds_elapsed += min(tickets[x], tickets[k] - 1)
 
     return seconds_elapsed
 
