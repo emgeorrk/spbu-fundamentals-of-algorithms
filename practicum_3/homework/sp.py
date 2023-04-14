@@ -9,8 +9,12 @@ from src.plotting import plot_graph
 def dijkstra_sp(G: nx.Graph, source_node="0") -> dict[Any, list[Any]]:
     shortest_paths = {x: [] for x in G}  # key = destination node, value = list of intermediate nodes
 
+    # очередь с приоритетом на длину пути до вершины (длина пути, вершина)
     q = queue.PriorityQueue()
+
+    # длина пути до каждой вершины
     dist = {x: 10**9 for x in G}
+
     used = {x: False for x in G}
     prev = {}
 
@@ -23,11 +27,13 @@ def dijkstra_sp(G: nx.Graph, source_node="0") -> dict[Any, list[Any]]:
         used[v] = True
 
         for x in G.neighbors(v):
+            # оптимизируем длину пути до вершины x
             if dist[x] > dist[v] + G[v][x]['weight']:
                 dist[x] = dist[v] + G[v][x]['weight']
                 prev[x] = v
                 q.put((dist[x], x))
 
+    # восстанавливаем ответ
     for x in G:
         if x == source_node: continue
         t = x
