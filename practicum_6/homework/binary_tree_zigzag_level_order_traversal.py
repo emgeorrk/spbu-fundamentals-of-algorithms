@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Any
 
 import yaml
-
+import queue
 
 @dataclass
 class Node:
@@ -21,22 +21,43 @@ class BinaryTree:
         return self.root is None
 
     def zigzag_level_order_traversal(self) -> list[Any]:
+        ans = []
+        q = queue.Queue()
+        if self: q.put((self.root, 0))
+        while not q.empty():
+            node, i = q.get()
+            if not node: continue
+            if len(ans) > i:
+                ans[i].append(node.key)
+            else:
+                ans.append([node.key])
 
-        ##########################
-        ### PUT YOUR CODE HERE ###
-        ##########################
+            if node.right: q.put((node.right, i + 1))
+            if node.left: q.put((node.left, i + 1))
 
-        pass
+        for i in range(len(ans)):
+            if i % 2 == 0: ans[i] = ans[i][::-1]
+
+        return ans
 
 
 def build_tree(list_view: list[Any]) -> BinaryTree:
     bt = BinaryTree()
 
-    ##########################
-    ### PUT YOUR CODE HERE ###
-    ##########################
+    nodes = []
 
-    pass
+    for x in list_view:
+        if x: nodes.append(Node(x))
+        else: nodes.append(None)
+
+    for i in range(len(nodes)):
+        if not nodes[i]: continue
+        if len(nodes)>i*2+1: nodes[i].left = nodes[i*2+1]
+        if len(nodes)>i*2+2: nodes[i].right = nodes[i*2+2]
+
+    if len(nodes)>0: bt.root = nodes[0]
+
+    return bt
 
 
 if __name__ == "__main__":
