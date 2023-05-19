@@ -72,3 +72,5 @@ Homework:
 ## Practicum 10
 
 Cubic spline: http://getsomemath.ru/subtopic/computational_mathematics/approximation_theory/local_interpolation
+
+LU: http://getsomemath.ru/subtopic/computational_mathematics/numerical_linear_algebra/gauss_methods
